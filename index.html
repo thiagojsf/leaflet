@@ -1,0 +1,77 @@
+<!doctype>
+<html>
+
+<head>
+    <title>Leaflet Polygon Management Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="dist/leaflet.pm.css">
+    <link rel="stylesheet" href="demo.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.0"></script>
+    <script>
+
+        function printLayers(){
+
+            var objects = {
+                polylines : [],
+                markers : [],
+                circleMarkers : [],
+                polylinesLatLngs : [],
+                markersLatLngs : [],
+                circleMarkersLatLngs : []
+            }
+
+            mapa.eachLayer((lay) => {
+                try
+                {
+                    if (lay instanceof L.Polyline)
+                    {
+                        objects.polylines.push(lay);
+                        objects.polylinesLatLngs.push(lay.getLatLngs());
+                    }
+
+                    if (lay instanceof L.Marker)
+                    {
+                        objects.markers.push(lay);
+                        objects.markersLatLngs.push(lay.getLatLng());
+                    }
+
+                    if (lay instanceof L.CircleMarker)
+                    {
+                        objects.circleMarkers.push(lay);
+                        objects.circleMarkersLatLngs.push(lay.getLatLng());
+                    }
+                }
+                catch(ex)
+                {
+                    console.log("A unhandled exception was threw while getting latitude and longitude of a layer");
+                }
+            });
+
+            console.log(objects);
+            return objects;
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+
+        <article>
+            Creating A Polygon
+
+            <div class="map" id="example2"></div>
+
+        </article>
+        <input type="button" value="Print layers" onclick="printLayers()" />
+    </div>
+    <script src="dist/leaflet.pm.min.js"></script>
+    <script src="demo.js"></script>
+</body>
+
+</html>
